@@ -1,0 +1,2 @@
+# never show the .env file unless someone is collaborating
+.env
