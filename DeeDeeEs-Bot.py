@@ -11,8 +11,10 @@ server = os.getenv("DISCORD_SERVER_1")
 
 test_channel = os.getenv("CUSTOM_CHANNEL_1")
 
+extensions = ["cogs.du30"]
+
 # client = discord.Client()
-bot = commands.Bot(command_prefix="!")
+bot = commands.Bot(command_prefix="!", description="Duterte Bot Example")
 
 @bot.event
 async def on_ready():
@@ -28,12 +30,21 @@ async def on_ready():
     members = '\n - '.join([member.name for member in guild.members])
     print(f"Current Server Members: \n - {members}")
 
+    # 0 = playing, 1 = streaming
+    await bot.change_presence(activity=discord.Streaming(name="Jakol Simulator v6.9", url="https://www.twitch.tv/pokimane"))
+
 @bot.event
 async def on_member_join(member):
+    #this dms the user
     await member.create_dm()
     await member.dm_channel.send(
-        f"Oi {member.name}, putang ina mong burat ka!"
+        f"Oi {member.mention}, putang ina mong burat ka!"
     )
+
+    # this sends a message to the general channel
+    general_channel = discord.utils.get(bot.get_all_channels(), name="general")
+
+    await general_channel.send(f"Jakol tayo pre {member.mention}")
 
 @bot.event
 async def on_message(message):
@@ -57,40 +68,14 @@ async def on_message(message):
 
     await bot.process_commands(message)
 
-@bot.command(name="dds", help="Get random meanings of DDS.")
-async def dds(context):
-
-    dds_meanings = [
-        "So are you a Dingdong Dantes Supporter?",
-        "So are you a Duterte Diehard Supporter?",
-        "So are you a Dirty Dick Supporter?",
-        "So are you part of the Davao Death Squad?",
-        "You the Distributed Denial of Service, is it?"
-    ]
-
-    response = random.choice(dds_meanings)
-
-    custom_channel = discord.utils.get(bot.get_all_channels(), name=test_channel)
-
-    if custom_channel == context.channel:
-        await context.channel.send(f"{response} <@{context.author.id}>")
-
-@bot.command(name="digong", help="Get random quotes from our Daddy D.")
-async def digong(context):
-
-    sample_du30_quotes = [
-        "Brrt brrt brrt",
-        "Putang ina mo!",
-        "May gahd I hate drugs!",
-        "Change is coming."
-    ]
-    
-    response = random.choice(sample_du30_quotes)
-
-    custom_channel = discord.utils.get(bot.get_all_channels(), name=test_channel)
-
-    if custom_channel == context.channel:
-        await context.channel.send(f"{response} <@{context.author.id}>")
+if __name__ == "__main__":
+    for extension in extensions:
+        bot.load_extension(extension)
         
 # client.run(token)
-bot.run(token)
+bot.run(token, bot=True, reconnect=True)
+
+'''
+Basics found here: https://realpython.com/how-to-make-a-discord-bot-python/
+Mainly got code from this gist: https://gist.github.com/EvieePy/d78c061a4798ae81be9825468fe146be
+'''

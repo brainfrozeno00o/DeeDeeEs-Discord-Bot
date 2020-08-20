@@ -1,2 +1,5 @@
 # never show the .env file unless someone is collaborating
 .env
+
+# do not include the __pycache__
+/cogs/__pycache__/*
