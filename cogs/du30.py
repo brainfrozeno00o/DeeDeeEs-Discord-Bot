@@ -2,12 +2,12 @@ import discord
 import random
 from discord.ext import commands
 
-class Du30Cog(commands.Cog):
+class Duterte(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(name="dds", aliases=['change'], description="Get random meanings of DDS.")
+    @commands.command(name="dds", aliases=['change'], help="Daghang salamat sa imong suporta...", description="Get random meanings of DDS.")
     async def dds(self, context):
         dds_meanings = [
             "So are you a Dingdong Dantes Supporter?",
@@ -21,7 +21,7 @@ class Du30Cog(commands.Cog):
 
         await context.channel.send(f"{response} {context.author.mention}")
 
-    @commands.command(name="digong", aliases=["dugong"], description="Get random quotes from our Daddy D.")
+    @commands.command(name="digong", aliases=["dugong"], help="Mahal na mahal ka ng Diyos.", description="Get random quotes from our Daddy D.")
     async def digong(self, context):
         sample_du30_quotes = [
             "Brrt brrt brrt",
@@ -35,9 +35,9 @@ class Du30Cog(commands.Cog):
         await context.channel.send(f"{response} {context.author.mention}")
 
 def setup(bot):
-    bot.add_cog(Du30Cog(bot))
+    bot.add_cog(Duterte(bot))
 
 '''
-Basics found here: https://realpython.com/how-to-make-a-discord-bot-python/
 Mainly got code from this gist: https://gist.github.com/EvieePy/d78c061a4798ae81be9825468fe146be
+API Documentation can be found here: https://discordpy.readthedocs.io/en/latest/
 '''
